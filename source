@@ -1,0 +1,173 @@
+package org;
+
+public class HotPot {
+	private String name;
+	private int stinky;
+	private int kimchi;
+	private int seafood;
+	private int sum;
+	
+
+	public HotPot(String name, int stinky, int kimchi, int seafood) {
+		super();
+		this.name = name;
+		this.stinky = stinky;
+		this.kimchi = kimchi;
+		this.seafood = seafood;
+		
+		sum=stinky*140+kimchi*140+seafood*150;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public int getStinky() {
+		return stinky;
+	}
+
+
+	public void setStinky(int stinky) {
+		this.stinky = stinky;
+	}
+
+
+	public int getKimchi() {
+		return kimchi;
+	}
+
+
+	public void setKimchi(int kimchi) {
+		this.kimchi = kimchi;
+	}
+
+
+	public int getSeafood() {
+		return seafood;
+	}
+
+
+	public void setSeafood(int seafood) {
+		this.seafood = seafood;
+	}
+
+
+	public int getSum() {
+		return sum;
+	}
+	
+	String show() {
+		return "訂購人:"+getName()+
+				"\n大腸臭臭鍋:"+getStinky()+"鍋"+
+				"\n泡菜臭臭鍋:"+getKimchi()+"鍋"+
+				"\n海鮮臭臭鍋:"+getSeafood()+"鍋"+
+				"\n不是金鑽臭臭饕客"+
+				"\n總金額:"+getSum()+"元";
+	}
+	String showMem() {
+		return "訂購人:"+getName()+
+				"\n大腸臭臭鍋:"+getStinky()+"鍋"+
+				"\n泡菜臭臭鍋:"+getKimchi()+"鍋"+
+				"\n海鮮臭臭鍋:"+getSeafood()+"鍋"+
+				"\n是金鑽臭臭饕客"+
+				"\n總金額(88折):"+membership()+"元";
+	}
+	String reset() {
+		return "";
+	}
+	int membership() {
+		return sum=(int)((int)(stinky*140+kimchi*140+seafood*150)*0.88);
+	}
+
+	
+	
+	
+}
+
+
+
+/************************************************UI********************************************/
+
+
+	
+		
+		JCheckBox member = new JCheckBox("金鑽臭臭饕客");
+		member.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+			}
+		});
+		member.setBackground(new Color(64, 128, 128));
+		member.setForeground(new Color(255, 128, 64));
+		member.setFont(new Font("微軟正黑體", Font.PLAIN, 30));
+		member.setBounds(10, 358, 205, 53);
+		panel_1.add(member);
+		
+		//*Button*//
+		
+		JButton cleanButton = new JButton("清除重填");
+		cleanButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+		
+				
+				HotPot d=new HotPot("",0,0,0);
+				output.setText(d.reset());
+				name.setText(d.reset());
+				stinky.setText(d.reset());
+				kimchi.setText(d.reset());
+				seafood.setText(d.reset());
+							
+			}
+		});
+		cleanButton.setBackground(new Color(0, 64, 0));
+		cleanButton.setFont(new Font("微軟正黑體", Font.PLAIN, 30));
+		cleanButton.setForeground(new Color(255, 0, 0));
+		cleanButton.setBounds(10, 493, 238, 93);
+		panel_1.add(cleanButton);
+		
+		JButton checkButton = new JButton("確認送出");
+		checkButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String Name=name.getText();
+				String Stinky=stinky.getText();
+				String Kimchi=kimchi.getText();
+				String Seafood=seafood.getText();
+				
+				Integer S=new Integer(Stinky);
+				Integer K=new Integer(Kimchi);
+				Integer F=new Integer(Seafood);
+				
+				HotPot h=new HotPot(Name,S,K,F);
+				if((S|K|F)<0) {
+					output.setText("error\t請輸入正整數");
+				}
+				else {
+					
+					if(member.isSelected()){
+
+					
+						output.setText(h.showMem());
+					}
+					else {	
+						output.setText(h.show());
+					}
+				}
+			}
+		});
+		checkButton.setForeground(Color.RED);
+		checkButton.setFont(new Font("微軟正黑體", Font.PLAIN, 30));
+		checkButton.setBackground(new Color(128, 64, 0));
+		checkButton.setBounds(274, 493, 238, 93);
+		panel_1.add(checkButton);
+		
+	}
+}
